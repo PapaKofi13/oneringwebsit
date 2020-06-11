@@ -1,0 +1,18 @@
+"app" in my directory is what they refere to as "mysite"
+flush after making any changes
+dump all templates and css in static folder and put in public folder
+<% base_tag %> placed on "base template" so other pages inherit css and assets from
+$MetaTags returns title from cms
+$Content retrieves all contents from cms
+$Form brings login from
+every page comes with a controller make sure to create template in the same path as defined in the PageName.php and PageNameController.php
+pages created in app/src folder
+/dev/build after adding a page
+/template Page.ss is the "base template"
+
+
+
+
+author not showing
+comments form not rendering well
+
