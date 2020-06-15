@@ -90,6 +90,21 @@ $(function () {
     }
 
 
+    // Pagination
+if ($('.pagination').length) {
+    $('.main').on('click','.pagination a', function (e) {
+          e.preventDefault();
+          var url = $(this).attr('href');
+          $.ajax(url)
+              .done(function (response) {
+                  $('.main').html(response);
+              })
+              .fail (function (xhr) {
+                  alert('Error: ' + xhr.responseText);
+              });
+      });
+  }
+
 	
 })
 })(jQuery);

@@ -32,99 +32,56 @@
 				</div>
 
 				<!-- BEGIN PROPERTY LISTING -->
-				<div id="property-listing" class="list-style clearfix"> <!-- Inject "grid-style1" for grid view-->
-					<div class="row">
-						<div class="item col-md-4"><!-- Set width to 4 columns for grid view mode only -->
-							<div class="image">
-								<a href="properties-detail.html">
-									<span class="btn btn-default"><i class="fa fa-file-o"></i> Details</span>
-								</a>
-								<img src="http://placehold.it/760x670" alt="" />
-							</div>
-							<div class="price">
-								<span>$250</span><p>per night<p>
-							</div>
-							<div class="info">
-								<h3>
-									<a href="#">Luxury Apartment with great views</a>
-									<small>Upper East Side, New York</small>
-								</h3>
-								<p>Sed rutrum urna id tellus euismod gravida. Praesent placerat, mauris ac pellentesque fringilla, tortor libero condimen.</p>
-
-								<ul class="amenities">
-									<li><i class="icon-bedrooms"></i> 4</li>
-									<li><i class="icon-bathrooms"></i> 3</li>
-								</ul>
-							</div>
-						</div>
-						<div class="item col-md-4"><!-- Set width to 4 columns for grid view mode only -->
-							<div class="image">
-								<a href="properties-detail.html">
-									<span class="btn btn-default"><i class="fa fa-file-o"></i> Details</span>
-								</a>
-								<img src="http://placehold.it/760x670" alt="" />
-							</div>
-							<div class="price">
-								<span>$250</span><p>per night<p>
-							</div>
-							<div class="info">
-								<h3>
-									<a href="#">Luxury Apartment with great views</a>
-									<small>Upper East Side, New York</small>
-								</h3>
-								<p>Sed rutrum urna id tellus euismod gravida. Praesent placerat, mauris ac pellentesque fringilla, tortor libero condimen.</p>
-
-								<ul class="amenities">
-									<li><i class="icon-bedrooms"></i> 4</li>
-									<li><i class="icon-bathrooms"></i> 3</li>
-								</ul>
-							</div>
-						</div>
-						<div class="item col-md-4"><!-- Set width to 4 columns for grid view mode only -->
-							<div class="image">
-								<a href="properties-detail.html">
-									<span class="btn btn-default"><i class="fa fa-file-o"></i> Details</span>
-								</a>
-								<img src="http://placehold.it/760x670" alt="" />
-							</div>
-							<div class="price">
-								<span>$250</span><p>per night<p>
-							</div>
-							<div class="info">
-								<h3>
-									<a href="#">Luxury Apartment with great views</a>
-									<small>Upper East Side, New York</small>
-								</h3>
-								<p>Sed rutrum urna id tellus euismod gravida. Praesent placerat, mauris ac pellentesque fringilla, tortor libero condimen.</p>
-
-								<ul class="amenities">
-									<li><i class="icon-bedrooms"></i> 4</li>
-									<li><i class="icon-bathrooms"></i> 3</li>
-								</ul>
-							</div>
-						</div>
-
+				<% loop $Results %>
+				<div class="item col-md-4">
+					<div class="image">
+						<a href="$Link">
+							<span class="btn btn-default"><i class="fa fa-file-o"></i> Details</span>
+						</a>
+						$PrimaryPhoto.Fit(760,670)
+					</div>
+					<div class="price">
+						<span>$PricePerNight.Nice</span><p>per night<p>
+					</div>
+					<div class="info">
+						<h3>
+							<a href="$Link">$Title</a>
+							<small>$Region.Title</small>
+							<small>Available $AvailableStart.Nice - $AvailableEnd.Nice</small>
+						</h3>
+						<p>$Description.LimitSentences(3)</p>
+				
+						<ul class="amenities">
+							<li><i class="icon-bedrooms"></i> $Bedrooms</li>
+							<li><i class="icon-bathrooms"></i> $Bathrooms</li>
+						</ul>
 					</div>
 				</div>
+				<% end_loop %>
 				<!-- END PROPERTY LISTING -->
 
 
-				<!-- BEGIN PAGINATION -->
-				<div class="pagination">
-					<ul id="previous col-xs-6">
-						<li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
-					</ul>
-					<ul class="hidden-xs">
-						<li class="active"><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-					</ul>
-					<ul id="next col-xs-6">
-						<li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
-					</ul>
-				</div>
-				<!-- END PAGINATION -->
+					<!-- BEGIN PAGINATION -->
+					<% if $Results.MoreThanOnePage %>
+					<div class="pagination">
+						<% if $Results.NotFirstPage %>
+						<ul id="previous col-xs-6">
+							<li><a href="$Results.PrevLink"><i class="fa fa-chevron-left"></i></a></li>
+						</ul>
+						<% end_if %>
+						<ul class="hidden-xs">
+							<% loop $Results.Pages %>
+							<li <% if $CurrentBool %>class="active"<% end_if %>><a href="$Link">$PageNum</a></li>
+							<% end_loop %>
+						</ul>
+						<% if $Results.NotLastPage %>
+						<ul id="next col-xs-6">
+							<li><a href="$Results.NextLink"><i class="fa fa-chevron-right"></i></a></li>
+						</ul>
+						<% end_if %>
+					</div>
+					<% end_if %>
+					<!-- END PAGINATION -->
 
 			</div>
 			<!-- END MAIN CONTENT -->
