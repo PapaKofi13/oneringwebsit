@@ -9,27 +9,84 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\ORM\ArrayLib;
+use SilverStripe\Control\HTTPRequest;
 
 
 
 class PropertySearchPageController extends PageController{
 
 
-//     public function index(HTTPRequest $request){
-//         $properties = Property::get()->limit(20);
+    public function index(HTTPRequest $request){
+        $properties = Property::get()->limit(20);
 
-//     if ($search = $request->getVar('Keywords')) {
-//         $properties = $properties->filter([
-//             'Title:PartialMatch' => $search
-//         ]);
+        if ($search = $request->getVar('Keywords')) {
+            $properties = $properties->filter([
+                'Title:PartialMatch' => $search
+            ]);
+        }
+
+        if ($arrival = $request->getVar('ArrivalDate')) {
+            $arrivalStamp = strtotime($arrival);                        
+            $nightAdder = '+'.$request->getVar('Nights').' days';
+            $startDate = date('Y-m-d', $arrivalStamp);
+            $endDate = date('Y-m-d', strtotime($nightAdder, $arrivalStamp));
+        
+            $properties = $properties->filter([
+                'AvailableStart:LessThanOrEqual' => $startDate,
+                'AvailableEnd:GreaterThanOrEqual' => $endDate
+            ]);
+        
+        }
+
+        $filters = [
+            ['Bedrooms', 'Bedrooms', 'GreaterThanOrEqual'],
+            ['Bathrooms', 'Bathrooms', 'GreaterThanOrEqual'],
+            ['MinPrice', 'PricePerNight', 'GreaterThanOrEqual'],
+            ['MaxPrice', 'PricePerNight', 'LessThanOrEqual'],
+          ];
+        
+          foreach($filters as $filterKeys) {
+            list($getVar, $field, $filter) = $filterKeys;
+            if ($value = $request->getVar($getVar)) {
+              $properties = $properties->filter([
+                "{$field}:{$filter}" => $value
+              ]);
+            }
+          }
+
+          return [
+              'Results' => $properties
+          ];
 
 
-//    }
+        if ($bedrooms = $request->getVar('Bedrooms')) {
+            $properties = $properties->filter([
+                'Bedrooms:GreaterThanOrEqual' => $bedrooms
+            ]);
+        }
 
-//      return [
-//             'Results' => $properties
-//         ];
-//     }
+        if ($bathrooms = $request->getVar('Bathrooms')) {
+            $properties = $properties->filter([
+                'Bathrooms:GreaterThanOrEqual' => $bathrooms
+            ]);
+        }
+    
+        if ($minPrice = $request->getVar('MinPrice')) {
+            $properties = $properties->filter([
+                'PricePerNight:GreaterThanOrEqual' => $minPrice
+            ]);
+        }
+    
+        if ($maxPrice = $request->getVar('MaxPrice')) {
+            $properties = $properties->filter([
+                'PricePerNight:LessThanOrEqual' => $maxPrice
+            ]);
+        }
+
+     return [
+            'Results' => $properties
+        ];
+    }
 
 
 
@@ -78,9 +135,10 @@ class PropertySearchPageController extends PageController{
             )
         );
 
-        $form->setFormMethod('GET')
-         ->setFormAction($this->Link())
-         ->disableSecurityToken();
+            $form->setFormMethod('GET')
+            ->setFormAction($this->Link())
+            ->disableSecurityToken()
+            ->loadDataFrom($this->request->getVars());
 
         return $form;
     }
