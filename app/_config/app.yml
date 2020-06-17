@@ -31,6 +31,6 @@ SilverStripe\Core\Injector\Injector:
       VersionedStage: Stage
 
 
-SilverStripe\SiteConfig\SiteConfig:
-      extensions:
-        - SilverStripe\Lessons\SiteConfigExtension
+# SilverStripe\SiteConfig\SiteConfig:
+#       extensions:
+#         - SilverStripe\Lessons\SiteConfigExtension
