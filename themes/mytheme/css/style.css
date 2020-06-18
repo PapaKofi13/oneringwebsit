@@ -32,8 +32,11 @@
 *,
 *::before,
 *::after {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box; }
+    border: transparent !important;
+    width: inherit;
+    outline: none;
+  
+   }
 
 html {
   font-family: sans-serif;
@@ -180,8 +183,21 @@ caption {
 th {
   text-align: inherit; }
 
+
+
 label {
-  display: inline-block;
+  border: transparent !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    height: 52px !important;
+    padding-left: 0;
+    padding-right: 0;
+    background: transparent !important;
+    color: rgba(0, 0, 0, 0.9) !important;
+    font-size: 16px;
+    border-radius: 0px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+  display: none;
   margin-bottom: 0.5rem; }
 
 button {
@@ -201,13 +217,18 @@ textarea {
   font-size: inherit;
   line-height: inherit; }
 
+  /* password fields */
 button,
 input {
-  overflow: visible; }
+  overflow: visible; 
+  margin-bottom: 1em;
+}
 
 button,
 select {
-  text-transform: none; }
+  text-transform: visible; 
+  margin-bottom: 1em;
+}
 
 button,
 [type="button"],
@@ -9671,3 +9692,30 @@ textarea.form-control {
   100% {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
+
+#Form_RegistrationForm_Password_Holder {
+  border: transparent !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    height: 52px !important;
+    padding-left: 0;
+    padding-right: 0;
+    background: transparent !important;
+    color: rgba(0, 0, 0, 0.9) !important;
+    font-size: 16px;
+    border-radius: 0px;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    margin-bottom: 2em;
+    border-bottom: 1px;
+}
+
+.middleColumn #Password_Password_Holder{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    margin-bottom: 4px;
+}
+
+.middleColumn #Password_ConfirmPassword{
+  border-top: 1px solid rgba(0, 0, 0, 0.05) !important;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important; */
+
+}
